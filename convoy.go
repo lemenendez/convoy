@@ -58,8 +58,7 @@ func NewOps(from Options) Options {
 }
 
 func NewDSN(opt Options) string {
-	dsn := fmt.Sprintf("%v:%v@tcp(%v:%v)/?parseTime=%t&multiStatements=%t", opt.User, opt.Pass, opt.Host, opt.Port, opt.ParseTime, opt.MultiStatements)
-	return dsn
+	return fmt.Sprintf("%v:%v@tcp(%v:%v)/%v?parseTime=%t&multiStatements=%t", opt.User, opt.Pass, opt.Host, opt.Port, opt.DB, opt.ParseTime, opt.MultiStatements)
 }
 
 func NewDB(opt Options) (*sql.DB, error) {

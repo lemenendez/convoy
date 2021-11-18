@@ -8,4 +8,6 @@ WORKDIR /go/src
 COPY go.mod .
 COPY go.sum .
 
-RUN go get  gorm.io/gorm@v1.2.0
+COPY . .
+
+RUN go get
