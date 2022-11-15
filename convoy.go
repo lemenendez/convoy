@@ -7,7 +7,6 @@ import (
 
 	gmysql "gorm.io/driver/mysql"
 	"gorm.io/gorm"
-	"gorm.io/gorm/logger"
 )
 
 // Configuring sql.DB for Better Performance
@@ -38,6 +37,7 @@ type Options struct {
 	// It is recommended to be at least 1
 	MaxIdleCons                int
 	ParseTime, MultiStatements bool
+	GormConfig                 *gorm.Config
 }
 
 func NewOps(from Options) Options {
@@ -75,7 +75,7 @@ func NewDB(opt Options) (*sql.DB, error) {
 
 func NewGormDB(opt Options) (*gorm.DB, error) {
 	dsn := NewDSN(opt)
-	con, err := gorm.Open(gmysql.Open(dsn), &gorm.Config{Logger: logger.Default.LogMode(logger.Info)})
+	con, err := gorm.Open(gmysql.Open(dsn), opt.GormConfig)
 	if err != nil {
 		return nil, err
 	}
